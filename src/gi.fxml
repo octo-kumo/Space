@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <right>
+      <Accordion minWidth="300.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" text="Camera Control">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label fx:id="cameraRollLabel" text="Camera Roll (0º)" />
+                        <Slider fx:id="cameraRoll" blockIncrement="1.0" majorTickUnit="45.0" max="360.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <Label fx:id="cameraPitchLabel" text="Camera Pitch (-20º)" />
+                        <Slider fx:id="cameraPitch" blockIncrement="1.0" majorTickUnit="30.0" max="90.0" min="-90.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="-20.0" />
+                        <Label fx:id="cameraYawLabel" text="Camera Yaw (0º)" />
+                        <Slider fx:id="cameraYaw" blockIncrement="1.0" majorTickUnit="45.0" max="360.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <CheckBox fx:id="autoSpin" mnemonicParsing="false" text="Auto Spin (Yaw)" />
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <TextField fx:id="cameraXField" promptText="Camera X" text="\${cameraXSlider.value}" />
+                        <Slider fx:id="cameraXSlider" blockIncrement="1.0" majorTickUnit="50.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <TextField fx:id="cameraYField" promptText="Camera Y" />
+                        <Slider fx:id="cameraYSlider" blockIncrement="1.0" majorTickUnit="50.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <TextField fx:id="cameraZField" promptText="Camera Z" />
+                        <Slider fx:id="cameraZSlider" blockIncrement="1.0" majorTickUnit="50.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                        <CheckBox fx:id="cameraBound" mnemonicParsing="false" text="Camera Bound" />
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <Label fx:id="cameraFOVLabel" text="Camera FOV (45º)" />
+                        <Slider fx:id="cameraFOV" blockIncrement="1.0" majorTickUnit="30.0" max="180.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" value="45.0" />
+                     </children>
+                  </VBox>
+               </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Planet Tracking">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Create">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </TitledPane>
+            <TitledPane animated="false" text="Presets">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </TitledPane>
+        </panes>
+      </Accordion>
+   </right>
+</BorderPane>
