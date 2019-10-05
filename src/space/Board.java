@@ -1,39 +1,44 @@
 package space;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
-import javafx.util.Duration;
 
-public class Board extends Group {
+public class Board extends Group implements EventHandler<MouseEvent> {
+    final Group AXIS;
+    SimpleBooleanProperty autoSpin;
     boolean autoFollow;
     Engine engine;
     Rotate xRotate;
     Rotate yRotate;
     Rotate zRotate;
-    Timeline timeline;
     PerspectiveCamera camera;
     Translate pivot;
+    Translate extraTranslate;
+    private double lastX;
+    private double lastY;
 
-    public Board(PerspectiveCamera camera) {
+    public Board() {
+        PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setNearClip(.5);
+        camera.setFarClip(10000);
+
+        autoSpin = new SimpleBooleanProperty(true);
         engine = new Engine(this);
-        engine.update(0.001);
         this.camera = camera;
-        setOnKeyPressed(engine);
-        setOnKeyReleased(engine);
-        prepareCamera(camera, true);
-        getChildren().addAll(makeAxisGroup(), camera);
-        engine.start();
+        prepareCamera(camera);
+        getChildren().addAll(AXIS = makeAxisGroup(), camera);
+        AXIS.setVisible(false);
     }
 
-    public Group makeAxisGroup() {
+    private Group makeAxisGroup() {
         final Group axisGroup = new Group();
         final PhongMaterial redMaterial = new PhongMaterial();
         redMaterial.setDiffuseColor(Color.DARKRED);
@@ -59,28 +64,34 @@ public class Board extends Group {
         return axisGroup;
     }
 
-    static Duration totalSpinPeriod = Duration.seconds(30);
-
-    public void prepareCamera(PerspectiveCamera camera, boolean spin) {
+    private void prepareCamera(PerspectiveCamera camera) {
         camera.setFieldOfView(45);
-        pivot = new Translate();
-        xRotate = new Rotate(-20, Rotate.X_AXIS);
-        yRotate = new Rotate(spin ? 0 : 45, Rotate.Y_AXIS);
-        zRotate = new Rotate(0, Rotate.Z_AXIS);
         camera.getTransforms().addAll(
-                pivot,
-                yRotate,
-                xRotate,
-                zRotate,
-                new Translate(0, 0, -100)
+                pivot = new Translate(),
+                yRotate = new Rotate(0, Rotate.Y_AXIS),
+                xRotate = new Rotate(-20, Rotate.X_AXIS),
+                zRotate = new Rotate(0, Rotate.Z_AXIS),
+                extraTranslate = new Translate(0, 0, -100)
         );
-        if (spin) {
-            timeline = new Timeline(
-                    new KeyFrame(Duration.ZERO, new KeyValue(yRotate.angleProperty(), 0)),
-                    new KeyFrame(totalSpinPeriod, new KeyValue(yRotate.angleProperty(), 360))
-            );
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
+    }
+
+    /**
+     * Used to handle dragging. So user can just change the viewing angle by dragging
+     *
+     * @param event the event lol
+     */
+    @Override
+    public void handle(MouseEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+            lastX = event.getX();
+            lastY = event.getY();
+        } else if (event.getEventType() == MouseEvent.MOUSE_DRAGGED) {
+            double dX = event.getX() - lastX;
+            double dY = event.getY() - lastY;
+            lastX = event.getX();
+            lastY = event.getY();
+            yRotate.setAngle((yRotate.getAngle() + dX / 3 + 360) % 360);
+            xRotate.setAngle(Math.max(-90, Math.min(90, xRotate.getAngle() - dY / 3)));
         }
     }
 }

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="rootPane" alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="space.Controller">
+    <children>
+        <BorderPane fx:id="contentPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="1000.0" prefWidth="1200.0">
+            <right>
+                <VBox BorderPane.alignment="CENTER">
+                    <children>
+                        <HBox alignment="CENTER_RIGHT" onMouseDragged="#windowDrag" onMousePressed="#windowPressed" onMouseReleased="#windowReleased" prefHeight="25.0" prefWidth="200.0">
+                            <children>
+                                <Label fx:id="bigHeader" maxWidth="1.7976931348623157E308" onMouseDragged="#windowDrag" onMousePressed="#windowPressed" onMouseReleased="#windowReleased" text="Space Simulator" HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font size="18.0" />
+                                    </font>
+                                    <padding>
+                                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                    </padding>
+                                </Label>
+                        <ImageView fx:id="viewChanger" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#switchTheme" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@media/sun-icon.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#fullScreen" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@media/fullscreen.png" />
+                                    </image>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ImageView>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" onMouseClicked="#close" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@media/close.png" />
+                                    </image>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND" />
+                                    </cursor>
+                                </ImageView>
+                            </children>
+                            <padding>
+                                <Insets right="8.0" />
+                            </padding>
+                        </HBox>
+                        <Accordion maxHeight="1.7976931348623157E308" minHeight="0.0" minWidth="300.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+                            <panes>
+                                <TitledPane fx:id="cameraControllPane" minHeight="0.0" text="Camera Control">
+                                    <content>
+                                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0">
+                                            <content>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                    <children>
+                                                        <Label fx:id="cameraRollLabel" text="Camera Roll (0º)" />
+                                                        <Slider fx:id="cameraRoll" blockIncrement="1.0" majorTickUnit="45.0" max="360.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" styleClass="numbers" />
+                                                        <Label fx:id="cameraPitchLabel" text="Camera Pitch (-20º)" />
+                                                        <Slider fx:id="cameraPitch" blockIncrement="1.0" majorTickUnit="30.0" max="90.0" min="-90.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="-20.0" />
+                                                        <Label fx:id="cameraYawLabel" text="Camera Yaw (0º)" />
+                                                        <Slider fx:id="cameraYaw" blockIncrement="1.0" majorTickUnit="45.0" max="360.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" styleClass="numbers" />
+                                                        <CheckBox fx:id="autoSpin" mnemonicParsing="false" selected="true" text="Auto Spin (Yaw)">
+                                                            <VBox.margin>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <Separator prefWidth="200.0">
+                                                            <VBox.margin>
+                                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                                            </VBox.margin>
+                                                        </Separator>
+                                          <Label fx:id="cameraPosition" text="Camera Position">
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                                        <GridPane fx:id="cameraPositionControl" hgap="3.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <TextField fx:id="cameraXField" promptText="Camera X" text="0.0" GridPane.columnIndex="1" />
+                                                                <Slider fx:id="cameraXSlider" blockIncrement="1.0" majorTickUnit="250.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                <TextField fx:id="cameraYField" promptText="Camera Y" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                <Slider fx:id="cameraYSlider" blockIncrement="1.0" majorTickUnit="250.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                <TextField fx:id="cameraZField" promptText="Camera Z" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                <Slider fx:id="cameraZSlider" blockIncrement="1.0" majorTickUnit="250.0" max="500.0" min="-500.0" minorTickCount="10" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                <Label text="X:">
+                                                                    <GridPane.margin>
+                                                                        <Insets />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="Y:" GridPane.rowIndex="2">
+                                                                    <GridPane.margin>
+                                                                        <Insets />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="Z:" GridPane.rowIndex="4">
+                                                                    <GridPane.margin>
+                                                                        <Insets />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                            </children>
+                                                        </GridPane>
+                                                        <CheckBox fx:id="cameraBound" mnemonicParsing="false" text="Is Camera Bound">
+                                                            <VBox.margin>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="followCOM" mnemonicParsing="false" text="Follow Center of Mass">
+                                                            <VBox.margin>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <Separator prefWidth="200.0">
+                                                            <VBox.margin>
+                                                                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+                                                            </VBox.margin>
+                                                        </Separator>
+                                                        <Label fx:id="cameraFOVLabel" text="Camera FOV (45º)" />
+                                                        <Slider fx:id="cameraFOV" blockIncrement="1.0" majorTickUnit="30.0" max="180.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="45.0" />
+                                                        <Label fx:id="cameraZoomLabel" text="Camera Distance (2^7)" />
+                                                        <Slider fx:id="cameraZoom" blockIncrement="1.0" majorTickUnit="1.0" max="14.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="7.0" />
+                                                    </children>
+                                                    <padding>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </padding>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </TitledPane>
+                                <TitledPane fx:id="engineControlPane" expanded="false" prefHeight="200.0" prefWidth="200.0" text="Engine Control">
+                                    <content>
+                                        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0">
+                                            <content>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                    <padding>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </padding>
+                                                    <children>
+                                                        <Label fx:id="simGLabel" text="Gravitational Constant: (6.67*10^-6)" />
+                                                        <Slider fx:id="simG" blockIncrement="1.0" majorTickUnit="1.0" max="0.0" min="-10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="-6.0" />
+                                                        <Label fx:id="simSpeedLabel" text="Simulation Speed: (x1)" />
+                                                        <Slider fx:id="simSpeed" blockIncrement="1.0" majorTickUnit="1.0" max="9.0" min="-7.0" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="1.0" />
+                                                        <CheckBox fx:id="trails" mnemonicParsing="false" selected="true" text="Show Trails">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="collision" mnemonicParsing="false" selected="true" text="Collision">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="tidal" mnemonicParsing="false" text="Tidal Force">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="axis" mnemonicParsing="false" text="Show Axis">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="ambientLight" mnemonicParsing="false" text="Ambient Light">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                        <CheckBox fx:id="paused" mnemonicParsing="false" text="Paused">
+                                                            <VBox.margin>
+                                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                                            </VBox.margin>
+                                                        </CheckBox>
+                                                    </children>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </TitledPane>
+                                <TitledPane fx:id="trackingPane" expanded="false" text="Tracking">
+                           <content>
+                              <TableView fx:id="bodyList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                <columns>
+                                  <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
+                                  <TableColumn prefWidth="75.0" text="X" fx:id="xCol" />
+                                    <TableColumn fx:id="yCol" prefWidth="75.0" text="Y" />
+                                    <TableColumn fx:id="zCol" prefWidth="75.0" text="Z" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </content>
+                                </TitledPane>
+                                <TitledPane fx:id="createPane" expanded="false" text="Create">
+                                    <content>
+                                        <ScrollPane fitToWidth="true">
+                                            <content>
+                                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                    <children>
+                                                        <GridPane hgap="5.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <TextField fx:id="newBodyX" promptText="X" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                <Slider fx:id="newBodyXSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                <TextField fx:id="newBodyY" promptText="Y" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                <Slider fx:id="newBodyYSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                <TextField fx:id="newBodyZ" promptText="Z" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                <Slider fx:id="newBodyZSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                <Label text="x=" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="y=" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="z=" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <TextField fx:id="newBodyVX" promptText="X" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                                <Slider fx:id="newBodyVXSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                                <TextField fx:id="newBodyVY" promptText="Y" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                                <Slider fx:id="newBodyVYSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                                <TextField fx:id="newBodyVZ" promptText="Z" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                                                <Slider fx:id="newBodyVZSlider" blockIncrement="1.0" min="-100.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                                                                <Label text="vx=" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="vy=" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <Label text="vz=" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <CheckBox fx:id="obitCOM" mnemonicParsing="false" text="Obit Center of Mass" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                                                <Label fx:id="nameLabel" text="Name:" GridPane.halignment="RIGHT">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <TextField fx:id="newBodyName" GridPane.columnIndex="1">
+                                                                    <GridPane.margin>
+                                                                        <Insets bottom="5.0" />
+                                                                    </GridPane.margin>
+                                                                </TextField>
+                                                                <TextField fx:id="newBodyTilt" promptText="Z" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                                                <Slider fx:id="newBodyTiltSlider" blockIncrement="1.0" majorTickUnit="30.0" max="90.0" min="-90.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                                                <Label text="Tilt:" GridPane.halignment="RIGHT" GridPane.rowIndex="13">
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                                <TextField fx:id="newBodyF" promptText="Z" styleClass="numbers" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                                                <Slider fx:id="newBodyFSlider" blockIncrement="1.0" majorTickUnit="2.0" max="10.0" min="-10.0" showTickLabels="true" showTickMarks="true" styleClass="numbers" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+                                                                <Label text="fʳ:" GridPane.halignment="RIGHT" GridPane.rowIndex="15">
+                                                                    <font>
+                                                                        <Font size="15.0" />
+                                                                    </font>
+                                                                    <GridPane.margin>
+                                                                        <Insets right="5.0" />
+                                                                    </GridPane.margin>
+                                                                </Label>
+                                                            </children>
+                                                        </GridPane>
+                                                        <Separator prefWidth="200.0">
+                                                            <VBox.margin>
+                                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                            </VBox.margin>
+                                                        </Separator>
+                                                        <Label fx:id="massLabel" text="Mass:" />
+                                                        <TextField fx:id="newBodyMass" promptText="Z" styleClass="numbers" text="0.0" />
+                                                        <Slider fx:id="newBodyMassSlider" blockIncrement="1.0" majorTickUnit="2500.0" max="10000.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" value="10.0" />
+                                                        <Label fx:id="radiusLabel" text="Radius" />
+                                                        <TextField fx:id="newBodyRadius" promptText="Z" styleClass="numbers" text="0.0" />
+                                                        <Slider fx:id="newBodyRadiusSlider" blockIncrement="1.0" majorTickUnit="2.5" max="10.0" minorTickCount="4" showTickLabels="true" showTickMarks="true" styleClass="numbers" />
+                                                        <GridPane hgap="5.0" vgap="5.0">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <ComboBox fx:id="newBodyType" prefWidth="150.0" />
+                                                                <CheckBox fx:id="newBodyStar" mnemonicParsing="false" text="Star" GridPane.rowIndex="1">
+                                                                    <GridPane.margin>
+                                                                        <Insets left="5.0" />
+                                                                    </GridPane.margin>
+                                                                </CheckBox>
+                                                                <Button fx:id="newBodyCreate" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#addBody" styleClass="invert-button" text="Create" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                <Hyperlink fx:id="newBodyInfo" onAction="#showInfo" text="More Info" GridPane.columnIndex="1" />
+                                                                <CheckBox fx:id="newBodyBH" mnemonicParsing="false" text="Black Hole" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                    <GridPane.margin>
+                                                                        <Insets left="5.0" />
+                                                                    </GridPane.margin>
+                                                                </CheckBox>
+                                                            </children>
+                                                        </GridPane>
+                                                        <Label fx:id="createMessage" textFill="#ff9e9e">
+                                                            <font>
+                                                                <Font name="System Bold" size="13.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </padding>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </TitledPane>
+                                <TitledPane fx:id="settingsPane" expanded="false" text="System Save/Load &amp; Settings">
+                                    <content>
+                                        <VBox prefHeight="200.0" prefWidth="100.0">
+                                            <children>
+                                                <Label fx:id="systemnameLabel" text="System Name:">
+                                                    <VBox.margin>
+                                                        <Insets bottom="4.0" />
+                                                    </VBox.margin>
+                                                </Label>
+                                                <TextField fx:id="systemName" promptText="Only letters/underscores">
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </TextField>
+                                                <Button fx:id="saveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#save" styleClass="invert-button" text="Save">
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Button>
+                                                <Button fx:id="loadButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#load" text="Load">
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Button>
+                                    <Button fx:id="importButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#importFromFile" text="Import from File">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button fx:id="exportButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportToFile" text="Export to FIle">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                                <Label fx:id="ioMessage" textFill="#ff7e7e" wrapText="true" />
+                                                <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" visible="false" VBox.vgrow="ALWAYS" />
+                                                <Label fx:id="avaliableLabel" text="Avaliable Presets:">
+                                                    <font>
+                                                        <Font name="System Bold" size="13.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="a1Label" text="solar_system">
+                                                    <VBox.margin>
+                                                        <Insets left="10.0" />
+                                                    </VBox.margin>
+                                                </Label>
+                                                <Label fx:id="a2Label" text="binary_star">
+                                                    <VBox.margin>
+                                                        <Insets left="10.0" />
+                                                    </VBox.margin>
+                                                </Label>
+                                                <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+                                                    <VBox.margin>
+                                                        <Insets left="5.0" right="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Separator>
+                                                <Label fx:id="langLabel" text="Language:">
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                    </VBox.margin>
+                                                </Label>
+                                                <ComboBox fx:id="language" prefWidth="150.0" />
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </TitledPane>
+                            </panes>
+                        </Accordion>
+                    </children>
+                </VBox>
+            </right>
+        </BorderPane>
+        <ScrollPane fx:id="infoPane" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="300.0" prefHeight="1000.0" prefWidth="300.0" styleClass="dark-bg" translateX="-300.0">
+            <content>
+                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                    <children>
+                        <GridPane>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <ImageView fx:id="infoImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                                <Label fx:id="infoName" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                    <GridPane.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </GridPane.margin>
+                                    <font>
+                                        <Font name="System Bold" size="24.0" />
+                                    </font>
+                                </Label>
+                                <Hyperlink onAction="#hideInfo" text="Hide Information" />
+                            </children>
+                        </GridPane>
+                        <Label fx:id="infoFacts" maxWidth="1.7976931348623157E308" wrapText="true">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                        </Label>
+                        <VBox fx:id="infoBody" spacing="5.0" />
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</StackPane>
