@@ -27,6 +27,7 @@ import space.util.ResizeHelper;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Space extends Application {
@@ -150,7 +151,7 @@ public class Space extends Application {
                 Config.load();
                 if (!Config.ROOT.has("firstTime")) Config.ROOT.put("firstTime", true);
                 Controller.resources = ResourceBundle.getBundle("space.lang.messages", new Locale(Config.getString("lang"), Config.getString("country")));
-                parent = FXMLLoader.load(getClass().getResource("/space/gi.fxml"));
+                parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/space/gi.fxml")));
                 board = new Board();
                 Materials.load();
                 System.out.println("Loader-> Loaded 'Information' 'Config' 'Resource Bundle' 'parent' and 'Materials'.");
