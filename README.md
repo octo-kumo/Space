@@ -9,6 +9,11 @@ Space Simulation.
 - JavaFX
 - Runs great on old intel mac but lags a lot on beafy windows for some reason.
 - i18n
+- 8K normal and specular map of earth
+
+![](images/earth-closeup.png)
+![](images/earth.png)
+![](images/create-bodies.png)
 
 ## Demo
 

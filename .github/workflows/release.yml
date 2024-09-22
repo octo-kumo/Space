@@ -8,12 +8,24 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     permissions:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        if: runner.os == 'Windows'
+      - name: Install WiX
+        run: dotnet tool install --global wix
+        if: runner.os == 'Windows'
+#      - name: Build WiX on Windows
+#        run: wix build .\nexus.wxs
+#        if: runner.os == 'Windows'
       - name: Setup Java
         uses: actions/setup-java@v4
         with:

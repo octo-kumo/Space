@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "me.kumo"
-version = "0.0.1"
+version = "0.0.2"
 javafx {
     version = "17.0.12"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media']
@@ -19,6 +19,7 @@ java {
     modularity.inferModulePath = true
 }
 jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'space'
     }
